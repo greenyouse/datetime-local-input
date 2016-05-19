@@ -1,0 +1,341 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-a11y-keys/iron-a11y-keys.html">
+<link rel="import" href="../iron-input/iron-input.html">
+
+<!--
+<datetime-local-polyfill> will act as a polyfill for datetime-local inputs. It uses
+a calendar for selecting the date and text entry to the time part.
+-->
+
+<dom-module id="datetime-local-polyfill">
+  <template>
+
+    <style>
+     :host {
+         display: block;
+     }
+    </style>
+
+    <div id="datetime" class="container">
+
+      <!-- This date polyfill isn't compatible with iron-input so
+           I'm setting up a listener for taps instead. -->
+      <input is="iron-input"
+             type="date"
+             id="date"
+             placeholder="mm/dd/yyyy"
+             data-format="MM/dd/yyyy"
+             style="text-align: center; max-width: 50%;"
+             required$="[[required]]"
+             aria-label="date">
+      ,
+
+      <!-- Using styles on the iron-inputs doesn't work easily so I'm inlining them here -->
+
+      <iron-a11y-keys id="hourKeys" target="[[hourTarget]]" keys="1 2 3 4 5 6 7 8 9 0"
+                      on-keys-pressed="setHour"></iron-a11y-keys>
+      <input is="iron-input"
+             id="hour"
+             placeholder="-"
+             maxlength="2"
+             allowed-pattern="[0-9]"
+             bind-value="{{hour::input}}"
+             style="text-align: center; max-width: 10%;"
+             required$="[[required]]"
+             aria-label="hour">
+      :
+
+      <iron-a11y-keys id="minuteKeys" target="[[minuteTarget]]" keys="1 2 3 4 5 6 7 8 9 0"
+                      on-keys-pressed="setMinute"></iron-a11y-keys>
+      <input is="iron-input"
+             id="minute"
+             placeholder="-"
+             maxlength="2"
+             minlength="2"
+             allowed-pattern="[0-9]"
+             size="2"
+             bind-value="{{minute::input}}"
+             style="text-align: center; max-width: 10%;"
+             required$="[[required]]"
+             aria-label="minute">
+
+      <iron-a11y-keys id="periodKeys" target="[[periodTarget]]" keys="a p 1 2"
+                      on-keys-pressed="fillPeriod"></iron-a11y-keys>
+      <input is="iron-input"
+             id="period"
+             placeholder="--"
+             maxlength="2"
+             allowed-pattern="[ampAMP]"
+             size="2"
+             bind-value="{{period::input}}"
+             style="text-align: center; max-width: 15%; padding-left: 5px;"
+             required$="[[required]]"
+             aria-label="am/pm">
+    </div>
+  </template>
+</dom-module>
+<script>
+ (function(){
+   'use-strict';
+
+   Polymer({
+     is: 'datetime-local-polyfill',
+
+     properties: {
+       /**
+        * datetime value
+        */
+       datetime: {
+         type: String,
+         notify: true
+       },
+
+       /**
+        * date input
+        */
+       date: {
+         type: String,
+         notify: true
+       },
+
+       /**
+        * hour input
+        */
+       hour: {
+         type: String,
+         notify: true
+       },
+
+       /**
+        * minute input
+        */
+       minute: {
+         type: String,
+         notify: true
+       },
+
+       /**
+        * am/pm input
+        */
+       period: {
+         type: String,
+         notify: true
+       },
+
+       /**
+        * Store the tens place here for hour inputs
+        */
+       hourBuffer: {
+         type: String,
+         value: ""
+       },
+
+       /**
+        * Store the tens place here for minute inputs
+        */
+       minuteBuffer: {
+         type: String,
+         value: ""
+       },
+
+       hourTarget: {
+         type: Object,
+         value: function() {
+           return this.$.hour;
+         }
+       },
+
+       minuteTarget: {
+         type: Object,
+         value: function() {
+           return this.$.minute;
+         }
+       },
+
+       periodTarget: {
+         type: Object,
+         value: function() {
+           return this.$.period;
+         }
+       }
+     },
+
+     listeners: {
+       'date.change': 'setDate'
+     },
+
+     observers: [
+       'setTime(datetime)',
+       'computeDateTime(date, hour, minute, period)'
+     ],
+
+     /**
+      * Autocomplete function for filling in the period part of the datetime-local input.
+      *
+      * @param {Object} e an event object with the key pressed
+      */
+     fillPeriod: function(e) {
+       var key = e.detail.keyboardEvent.key;
+
+       // fill in either am or pm based on the key input
+       switch (key) {
+         case "a":
+           this.period = "am";
+           break;
+         case "1":
+           this.period = "am";
+           break;
+         case "2":
+           this.period = "pm";
+           break;
+         case "p":
+           this.period = "pm";
+           break;
+       }
+     },
+
+     /**
+      * Tests for invalid date/time and sets any invalid values to empty strings
+      * to avoid the 'Invalid date' error message from showing up in the
+      * input boxes.
+      *
+      * @param {String} time a string of the date or time parts
+      * @return {String} The validated time
+      */
+     _isValid: function(time, error) {
+       return time == 'Invalid date' ? '' : time;
+     },
+
+     /**
+      * Sets the initial date and time values.
+      */
+     setTime: function() {
+       // make sure we're not setting an invalid datetime
+       if (this.datetime !== '') {
+         var datetime = this.datetime;
+
+         this.date = this._isValid(moment(datetime, 'YYYY-MM-DDTHH:mm').format('YYYY-MM-DD'));
+         this.hour = this._isValid(moment(datetime, 'YYYY-MM-DDTHH:mm').format('hh'));
+         this.minute = this._isValid(moment(datetime, 'YYYY-MM-DDTHH:mm').format('mm'));
+         this.period = this._isValid(moment(datetime, 'YYYY-MM-DDTHH:mm').format('a'));
+
+         // make sure the date input gets loaded
+         this.$.date.value = this.date;
+       }
+     },
+
+     /**
+      * Formats the hour place in the same style as native datetime-local input
+      *
+      * @param {String} hour the minute input
+      * @return {String} time Current hour time
+      */
+     _formatHour: function(hour) {
+       var nextInput = this.$.minute,
+           tens = this.hourBuffer,
+           time;
+
+       if (tens == "" && hour > 1) {
+         this.hourBuffer = "";
+         nextInput.focus();
+         time = "0" + hour;
+       } else if (tens == "") {
+         this.hourBuffer = hour;
+         time = "0" + hour;
+       } else {
+         this.hourBuffer = "";
+         nextInput.focus();
+         time = tens + hour;
+       }
+
+       return time;
+     },
+
+     /**
+      * Formats the minute place in the same style as native datetime-local input
+      *
+      * @param {String} minute the minute input
+      * @return {String} time Current minute time
+      */
+     _formatMinute: function(minute) {
+       var nextInput = this.$.period,
+           tens = this.minuteBuffer,
+           time;
+
+       if (tens == "" && 10 > minute && minute > 5) {
+         // move the cursor to next input and zero pad the time
+         this.minuteBuffer = "";
+         nextInput.focus();
+         time = "0" + minute;
+       } else if (tens == "") {
+         // zero pad but store the minute and wait for more input just in-case
+         this.minuteBuffer = minute;
+         time = "0" + minute;
+       } else {
+         // move to next input and set the new time
+         this.minuteBuffer = "";
+         nextInput.focus();
+         time = tens + minute;
+       }
+
+       return time;
+     },
+
+     /**
+      * Workaround for when the component is loaded synchronously but the datetime-local
+      * value is given asynchronously (e.g. from clientside storage). It sets the datetime-local
+      * fields manually to ensure that an asynchronously loaded value still acts as the default value.
+      *
+      * @param {Object} e an event object with the date value
+      */
+     setDate: function(event) {
+       this.date = event.target.value;
+     },
+
+     /**
+      * @param {Object} e an event object with the hour value
+      */
+     setHour: function(event) {
+       hour = event.detail.combo;
+       this.hour = this._formatHour(hour);
+     },
+
+     /**
+      * @param {Object} e an event object with the minute value
+      */
+     setMinute: function(event) {
+       input = event.detail.combo;
+       this.minute = this._formatMinute(input);
+     },
+
+     /**
+      * Checks that each part of the datetime-local has been filled out. If any
+      * part is empty the component will fail validation.
+      *
+      * @param {String} date part of datetime-local
+      * @param {String} hour part of datetime-local
+      * @param {String} minute part of datetime-local
+      * @param {String} period part of datetime-local
+      */
+     computeDateTime: function(date, hour, minute, period) {
+       if (!this.date || !this.hour || !this.minute || !this.period) {
+         this.datetime = '';
+       } else {
+
+         var time = date + "T" + hour + ":" + minute + period;
+
+         // this normalizes the date so it's in 24 hr format to comply with datetime-local
+         this.datetime = moment(time, 'YYYY-MM-DDTHH:mma').format('YYYY-MM-DDTHH:mm');
+       }
+     }
+   });
+ })();
+</script>
+
+<!--  Required deps for the better-dateinput-polyfill -->
+<!-- TODO: update to 2.0.0 and change these to to minified versions -->
+<script src="../better-dom/dist/better-dom.js"></script>
+<script src="../better-i18n-plugin/dist/better-i18n-plugin.js"></script>
+<script src="../better-time-element/dist/better-time-element.js"></script>
+<script src="../better-emmet-plugin/dist/better-emmet-plugin.js"></script>
+<script src="../better-dateinput-polyfill/dist/better-dateinput-polyfill.js"></script>

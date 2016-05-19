@@ -1,0 +1,41 @@
+{
+  "name": "datetime-local-c",
+  "version": "0.1.0",
+  "description": "A polymer datetime-local component",
+  "license": "MIT",
+  "main": "datetime-local-c.html",
+  "authors": [
+    "Ed Babcock <ed@edbabcock.com>"
+  ],
+  "homepage": "https://github.com/greenyouse/dateteim-local-c/",
+  "keywords": [
+    "polymer",
+    "web-components",
+    "datetime-local"
+  ],
+  "ignore": [
+    "/.*",
+    "/test/",
+    "/demo/",
+    "bower_components"
+  ],
+  "dependencies": {
+    "better-dateinput-polyfill": "^2.0.0",
+    "better-dom": "^3.0.0",
+    "better-i18n-plugin": "^1.0.4",
+    "iron-a11y-keys": "^1.0.4",
+    "iron-form-element-behavior": "PolymerElements/iron-form-element-behavior#1.0.6",
+    "modernizr": "^3.3.1",
+    "moment": "^2.11.2",
+    "paper-input": "PolymerElements/paper-input#1.1.4",
+    "paper-styles": "PolymerElements/paper-styles#1.1.2",
+    "polymer": "Polymer/polymer#1.2.3"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page",
+    "iron-test-helpers": "PolymerElements/iron-test-helpers",
+    "test-fixture": "PolymerElements/test-fixture",
+    "web-component-tester": "^4.0.0",
+    "webcomponentsjs": "*"
+  }
+}

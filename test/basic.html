@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+  <head>
+    <title>iron-input tests</title>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../../web-component-tester/browser.js"></script>
+
+    <script src="../../iron-test-helpers/test-helpers.js"></script>
+    <script src="../../iron-test-helpers/mock-interactions.js"></script>
+    <link rel="import" href="../datetime-local-c.html">
+  </head>
+  <body>
+
+    <test-fixture id="basic">
+      <template>
+        <datetime-local-c required auto-validate></datetime-local-c>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="non-required">
+      <template>
+        <datetime-local-c auto-validate></datetime-local-c>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="custom-time">
+      <template>
+        <datetime-local-c required auto-validate value="2016-01-01T14:00"></datetime-local-c>
+      </template>
+    </test-fixture>
+
+    <test-fixture id="bad-initial">
+      <template>
+        <datetime-local-c required auto-validate value="foobar"></datetime-local-c>
+      </template>
+    </test-fixture>
+
+    <script>
+
+     suite('basic', function() {
+       test('valid input has no error', function() {
+         var input = fixture('basic');
+         input.value = '2016-01-01T14:00';
+         forceXIfStamp(input);
+
+         var container = Polymer.dom(input.root).querySelector('paper-input-container');
+         assert.ok(container, 'paper-input-container exists');
+         assert.isFalse(container.invalid);
+
+         var error = Polymer.dom(input.root).querySelector('paper-input-error');
+         assert.ok(error, 'paper-input-error exists');
+         assert.equal(getComputedStyle(error).visibility, 'hidden', 'error visibility: hidden');
+       });
+     });
+
+     suite('invalid', function() {
+       test('invlaid input has an error', function() {
+         var input = fixture('basic');
+         input.value = 'not a date';
+         forceXIfStamp(input);
+
+         var container = Polymer.dom(input.root).querySelector('paper-input-container');
+         assert.ok(container, 'paper-input-container exists');
+         assert.isTrue(container.invalid);
+
+         var error = Polymer.dom(input.root).querySelector('paper-input-error');
+         assert.ok(error, 'paper-input-error exists');
+         assert.equal(getComputedStyle(error).visibility, 'visible', 'error visibility: hidden');
+       });
+     });
+
+     suite('invalid', function() {
+       test('invlaid input has an error', function() {
+         var input = fixture('basic');
+         input.value = '';
+         forceXIfStamp(input);
+
+         var container = Polymer.dom(input.root).querySelector('paper-input-container');
+         assert.ok(container, 'paper-input-container exists');
+         assert.isTrue(container.invalid);
+
+         var error = Polymer.dom(input.root).querySelector('paper-input-error');
+         assert.ok(error, 'paper-input-error exists');
+         assert.equal(getComputedStyle(error).visibility, 'visible', 'error visibility: hidden');
+       });
+     });
+
+     suite('non-required', function() {
+       test('non-required input has no error', function() {
+         var input = fixture('non-required');
+         input.value = 'foobar';
+         forceXIfStamp(input);
+
+         var container = Polymer.dom(input.root).querySelector('paper-input-container');
+         assert.ok(container, 'paper-input-container exists');
+         assert.isFalse(container.invalid);
+
+         var error = Polymer.dom(input.root).querySelector('paper-input-error');
+         assert.ok(error, 'paper-input-error exists');
+         assert.equal(getComputedStyle(error).visibility, 'hidden', 'error visibility: hidden');
+       });
+     });
+
+     suite('bad-initial', function() {
+       test('bad inital input has an error', function() {
+         var input = fixture('bad-initial');
+         forceXIfStamp(input);
+
+         var container = Polymer.dom(input.root).querySelector('paper-input-container');
+         assert.ok(container, 'paper-input-container exists');
+         assert.isTrue(container.invalid);
+
+         var error = Polymer.dom(input.root).querySelector('paper-input-error');
+         assert.ok(error, 'paper-input-error exists');
+         assert.equal(getComputedStyle(error).visibility, 'visible', 'error visibility: hidden');
+       });
+     });
+
+     a11ySuite('basic');
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,188 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
+<link rel="import" href="../paper-input/paper-input-behavior.html">
+<!-- <link rel="import" href="../iron-validatable-behavior/iron-validatable-behavior.html"> -->
+<link rel="import" href="../iron-input/iron-input.html">
+<link rel="import" href="../paper-input/paper-input-container.html">
+<link rel="import" href="../paper-input/paper-input-error.html">
+<link rel="import" href="datetime-local-polyfill.html">
+
+
+<!--
+`<datetime-local-c>` is a paper-input for datetime-local that follows the Material Design styling. It has a customizable error message, label, and initial datetime-local value. The datetime-local value should have hours (in 24-hour format) and minutes but no seconds.
+
+     <datetime-local-c error-message="halp!" label="your date" value="2016-01-01T14:00"></datetime-local-c>
+
+### Validation
+
+The input is validated onInput if the component is `required` and uses `auto-validate`.
+To override the validation behavior use your own `_getValidity` method. It uses either
+native datetime-local input or a polyfill depending on browser support.
+
+### Styling
+
+See `Polymer.PaperInputContainer` for a list of custom properties used to
+style this element.
+
+@demo demo/index.html
+-->
+
+<dom-module id="datetime-local-c">
+  <template>
+
+      <paper-input-container id="container"
+                             no-label-float="[[noLabelFloat]]"
+                             invalid="[[invalid]]"
+                             always-float-label>
+
+        <label hidden$="[[!label]]">[[label]]</label>
+
+        <!-- This supports the native datetime-local input -->
+        <input is="iron-input"
+               class="paper-input-input"
+               type="datetime-local"
+               id="input"
+               hidden$="[[_polyfill]]"
+               required$="[[required]]"
+               disabled$="[[disabled]]"
+               aria-labelledby$="[[_ariaLabelledBy]]"
+               aria-describedby$="[[_ariaDescribedBy]]"
+               bind-value="{{value}}"
+               name$="[[name]]"
+               autofocus$="[[autofocus]]"
+               inputmode$="[[inputmode]]"
+               inavlid="{{invalid}}"
+               readonly$="[[readonly]]">
+
+        <!-- This is the polyfill for datetime-local input -->
+        <datetime-local-polyfill class="paper-input-input"
+                                 id="input"
+                                 hidden$="[[!_polyfill]]"
+                                 aria-labelledby$="[[_ariaLabelledBy]]"
+                                 aria-describedby$="[[_ariaDescribedBy]]"
+                                 datetime="{{value}}"
+                                 invalid="{{invalid}}"
+                                 required="[[required]]">
+        </datetime-local-polyfill>
+
+        <template is="dom-if" if="[[errorMessage]]">
+          <paper-input-error id="error">[[errorMessage]]</paper-input-error>
+        </template>
+
+  </template>
+</dom-module>
+<script>
+ (function() {
+
+   'use strict';
+
+   Polymer ({
+     is: 'datetime-local-c',
+
+     behaviors: [
+       Polymer.IronFormElementBehavior,
+       /* Polymer.IronValidatableBehavior, */
+       Polymer.PaperInputBehavior
+     ],
+
+     properties: {
+       /**
+        * error message for when validation fails
+        */
+       errorMessage: {
+         type: String,
+         value: "Please provide a full date"
+       },
+
+       /**
+        * input label
+        */
+       label: {
+         type: String,
+         value: "Date"
+       },
+
+       /**
+        * datetime-local value. By default, the value will be the current time.
+        */
+       value: {
+         type: String,
+         notify: true,
+         value: function() {
+           return moment().format('YYYY-MM-DDTHH:mm');
+         },
+         observer: 'validate'
+       },
+
+       /**
+        * Directs whether the polyfill is needed
+        */
+       _polyfill: {
+         type: Boolean,
+         value: function() {
+           return this._setPolyfill();
+         }
+       }
+     },
+
+     /**
+      * Overriden from Polymer.PaperInputBehavior
+      */
+     get _focusableElement() {
+       return this.$$("#input");
+     },
+
+     /**
+      * Check that the datetime-local value matches the expected datetime-local
+      * format. If any of the datetime-local input was blank, this will fail.
+      *
+      * @return {Boolean} the validity of the component
+      */
+     validate: function() {
+       var datetime = this.value,
+           valid = true;
+
+       // Empty, non-required input is valid.
+       if (!this.required && datetime == '') {
+       } else {
+         var datetimeExp = /\d{4}-\d{2}-\d{2}T\d{2}\:\d{2}/;
+
+         if (!datetimeExp.test(datetime))
+           valid = false;
+       }
+
+       // when validity changes update invalid and the addon
+       if (valid == this.invalid) {
+
+         this.invalid = !valid;
+
+         this.$.container.updateAddons({
+           inputElement: this.$$("#input"),
+           value: this.value,
+           invalid: !valid
+         })
+       }
+
+       return valid;
+     },
+
+     /**
+      * Check the browser to see if datetime-local is supported
+      *
+      * @return {Boolean} true if support exists for datetime-local
+      */
+     _setPolyfill: function() {
+       return !Modernizr.inputtypes['datetime-local'];
+     },
+
+     ready: function() {
+       // If there's an initial input, validate it.
+       if (this.value)
+         this.validate(this.value);
+     }
+
+   });
+ })();
+</script>
+<script src="../moment/moment.js"></script>
+<script src="modernizr.js"></script>
