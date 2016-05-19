@@ -1,0 +1,28 @@
+{
+  "name": "better-dom",
+  "version": "3.0.0-rc.1",
+  "main": [
+    "dist/better-dom.js",
+    "dist/better-dom-legacy.js",
+    "dist/better-dom-legacy.htc"
+  ],
+  "ignore": [
+    ".*",
+    "test",
+    "src",
+    "conf",
+    "task",
+    "gulpfile.js",
+    "package.json"
+  ],
+  "homepage": "https://github.com/chemerisuk/better-dom",
+  "_release": "3.0.0-rc.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v3.0.0-rc.1",
+    "commit": "8908cac4b9d364c345f8dcd06ce04763bf9e1a7a"
+  },
+  "_source": "https://github.com/chemerisuk/better-dom.git",
+  "_target": "~3.0.0",
+  "_originalSource": "better-dom"
+}

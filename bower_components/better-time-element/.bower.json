@@ -1,0 +1,32 @@
+{
+  "name": "better-time-element",
+  "version": "1.0.0-rc.5",
+  "main": [
+    "dist/better-time-element.js"
+  ],
+  "ignore": [
+    ".*",
+    "test",
+    "src",
+    "index.html",
+    "package.json",
+    "bower.json"
+  ],
+  "keywords": [
+    "better-dom"
+  ],
+  "dependencies": {
+    "better-dom": "^3.0.0",
+    "better-i18n-plugin": "^2.0.0"
+  },
+  "homepage": "https://github.com/chemerisuk/better-time-element",
+  "_release": "1.0.0-rc.5",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.0-rc.5",
+    "commit": "5dc914fb8ef48ed6cc085429b4b990aba6b764e8"
+  },
+  "_source": "https://github.com/chemerisuk/better-time-element.git",
+  "_target": "~1.0.0",
+  "_originalSource": "better-time-element"
+}
