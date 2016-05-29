@@ -130,10 +130,6 @@ style this element.
        return this.$$("#input");
      },
 
-     hostAttributes: {
-       tabindex: 1
-     },
-
      /**
       * Check that the datetime-local value matches the expected datetime-local
       * format. If any of the datetime-local input was blank, this will fail.
@@ -181,6 +177,11 @@ style this element.
        // If there's an initial input, validate it.
        if (this.value)
          this.validate(this.value);
+
+       // set the tabindex to 1 for the polyfill
+       if (this._setPolyfill()) {
+         this.setAttribute('tabindex', 1);
+       }
      }
 
    });
