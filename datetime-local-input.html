@@ -8,9 +8,9 @@
 
 
 <!--
-`<datetime-local-c>` is a paper-input for datetime-local that follows the Material Design styling. It has a customizable error message, label, and initial datetime-local value. The datetime-local value should have hours (in 24-hour format) and minutes but no seconds.
+`<datetime-local-input>` is a paper-input for datetime-local that follows the Material Design styling. It has a customizable error message, label, and initial datetime-local value. The datetime-local value should have hours (in 24-hour format) and minutes but no seconds.
 
-     <datetime-local-c error-message="halp!" label="your date" value="2016-01-01T14:00"></datetime-local-c>
+     <datetime-local-input error-message="halp!" label="your date" value="2016-01-01T14:00"></datetime-local-input>
 
 ### Validation
 
@@ -26,7 +26,7 @@ style this element.
 @demo demo/index.html
 -->
 
-<dom-module id="datetime-local-c">
+<dom-module id="datetime-local-input">
   <template>
 
       <paper-input-container id="container"
@@ -76,7 +76,7 @@ style this element.
    'use strict';
 
    Polymer ({
-     is: 'datetime-local-c',
+     is: 'datetime-local-input',
 
      behaviors: [
        Polymer.IronFormElementBehavior,

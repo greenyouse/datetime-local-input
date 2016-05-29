@@ -1,13 +1,13 @@
 {
-  "name": "datetime-local-c",
+  "name": "greenyouse-datetime-local-input",
   "version": "0.1.0",
   "description": "A polymer datetime-local component",
   "license": "MIT",
-  "main": "datetime-local-c.html",
+  "main": "datetime-local-input.html",
   "authors": [
     "Ed Babcock <ed@edbabcock.com>"
   ],
-  "homepage": "https://github.com/greenyouse/dateteim-local-c/",
+  "homepage": "https://github.com/greenyouse/datetime-local-input/",
   "keywords": [
     "polymer",
     "web-components",
