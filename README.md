@@ -11,7 +11,7 @@
 Install the component using [Bower](http://bower.io/):
 
 ```sh
-$ bower install datetime-local-input --save
+$ bower install greenyouse-datetime-local-input --save
 ```
 
 Or [download as ZIP](https://github.com/greenyouse/datetime-local-input/archive/master.zip).
