@@ -1,20 +1,20 @@
-# &lt;datetime-local-c&gt;
+# &lt;datetime-local-input&gt;
 
 > A polymer datetime-local component
 
 ## Demo
 
-[Check it live!](http://greenyouse.github.io/datetime-local-c)
+[Check it live!](http://greenyouse.github.io/datetime-local-input)
 
 ## Install
 
 Install the component using [Bower](http://bower.io/):
 
 ```sh
-$ bower install datetime-local-c --save
+$ bower install greenyouse-datetime-local-input --save
 ```
 
-Or [download as ZIP](https://github.com/greenyouse/datetime-local-c/archive/master.zip).
+Or [download as ZIP](https://github.com/greenyouse/datetime-local-input/archive/master.zip).
 
 ## Usage
 
@@ -27,13 +27,13 @@ Or [download as ZIP](https://github.com/greenyouse/datetime-local-c/archive/mast
 2. Import custom element:
 
     ```html
-    <link rel="import" href="bower_components/datetime-local-c/datetime-local-c.html">
+    <link rel="import" href="bower_components/datetime-local-input/datetime-local-input.html">
     ```
 
 3. Start using it!
 
     ```html
-    <datetime-local-c></datetime-local-c>
+    <datetime-local-input></datetime-local-input>
     ```
 
 ## Options
@@ -76,7 +76,7 @@ In order to run it locally you'll need to fetch some dependencies and a basic se
 
 ## History
 
-For detailed changelog, check [Releases](https://github.com/greenyouse/datetime-local-c/releases).
+For detailed changelog, check [Releases](https://github.com/greenyouse/datetime-local-input/releases).
 
 ## Contribute!
 

@@ -6,7 +6,7 @@
     <title>datetime-local-el demo</title>
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../datetime-local-c.html">
+    <link rel="import" href="../datetime-local-input.html">
     <link rel="import" href="../../paper-styles/demo-pages.html">
 
   </head>
@@ -16,19 +16,19 @@
       <br>
       <h4>Standard</h4>
       <div class="vertical-section">
-        <datetime-local-c></datetime-local-c>
-        <datetime-local-c label="Auto-validating" required auto-validate></datetime-local-c>
+        <datetime-local-input></datetime-local-input>
+        <datetime-local-input label="Auto-validating" required auto-validate></datetime-local-input>
       </div>
 
       <h4>Custom dates with pre-validation</h4>
       <div class="vertical-section">
-        <datetime-local-c label="UNIX Time" value="1970-01-01T00:00" required auto-validate></datetime-local-c>
-        <datetime-local-c label="Invalid Time" value="not a date" required auto-validate></datetime-local-c>
+        <datetime-local-input label="UNIX Time" value="1970-01-01T00:00" required auto-validate></datetime-local-input>
+        <datetime-local-input label="Invalid Time" value="not a date" required auto-validate></datetime-local-input>
       </div>
 
       <h4>Custom error message with auto-validation</h4>
       <div class="vertical-section">
-        <datetime-local-c required auto-validate error-message="Please enter a valid date"></datetime-local-c>
+        <datetime-local-input required auto-validate error-message="Please enter a valid date"></datetime-local-input>
       </div>
     </div>
   </body>

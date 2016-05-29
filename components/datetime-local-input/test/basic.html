@@ -12,31 +12,31 @@
 
     <script src="../../iron-test-helpers/test-helpers.js"></script>
     <script src="../../iron-test-helpers/mock-interactions.js"></script>
-    <link rel="import" href="../datetime-local-c.html">
+    <link rel="import" href="../datetime-local-input.html">
   </head>
   <body>
 
     <test-fixture id="basic">
       <template>
-        <datetime-local-c required auto-validate></datetime-local-c>
+        <datetime-local-input required auto-validate></datetime-local-input>
       </template>
     </test-fixture>
 
     <test-fixture id="non-required">
       <template>
-        <datetime-local-c auto-validate></datetime-local-c>
+        <datetime-local-input auto-validate></datetime-local-input>
       </template>
     </test-fixture>
 
     <test-fixture id="custom-time">
       <template>
-        <datetime-local-c required auto-validate value="2016-01-01T14:00"></datetime-local-c>
+        <datetime-local-input required auto-validate value="2016-01-01T14:00"></datetime-local-input>
       </template>
     </test-fixture>
 
     <test-fixture id="bad-initial">
       <template>
-        <datetime-local-c required auto-validate value="foobar"></datetime-local-c>
+        <datetime-local-input required auto-validate value="foobar"></datetime-local-input>
       </template>
     </test-fixture>
 
