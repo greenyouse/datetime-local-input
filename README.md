@@ -81,7 +81,7 @@ For detailed changelog, check [Releases](https://github.com/greenyouse/datetime-
 ## Contribute!
 
 There are a few issues that could use some help. Take a look at the
-[issues](https://github.com/greenyouse/event-planner/issues) for more.
+[issues](https://github.com/greenyouse/datetime-local-input/issues) for more.
 
 ## License
 
