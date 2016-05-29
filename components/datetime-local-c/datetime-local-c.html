@@ -1,7 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-form-element-behavior/iron-form-element-behavior.html">
 <link rel="import" href="../paper-input/paper-input-behavior.html">
-<!-- <link rel="import" href="../iron-validatable-behavior/iron-validatable-behavior.html"> -->
 <link rel="import" href="../iron-input/iron-input.html">
 <link rel="import" href="../paper-input/paper-input-container.html">
 <link rel="import" href="../paper-input/paper-input-error.html">
@@ -81,7 +80,6 @@ style this element.
 
      behaviors: [
        Polymer.IronFormElementBehavior,
-       /* Polymer.IronValidatableBehavior, */
        Polymer.PaperInputBehavior
      ],
 
@@ -130,6 +128,10 @@ style this element.
       */
      get _focusableElement() {
        return this.$$("#input");
+     },
+
+     hostAttributes: {
+       tabindex: 1
      },
 
      /**
