@@ -28,6 +28,12 @@ style this element.
 
 <dom-module id="datetime-local-input">
   <template>
+    <style>
+     /* forcing the hidden attribute since Chrome doesn't always respect it */
+     *[hidden] {
+         display: none;
+     }
+    </style>
 
       <paper-input-container id="container"
                              no-label-float="[[noLabelFloat]]"

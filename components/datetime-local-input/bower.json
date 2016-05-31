@@ -1,6 +1,6 @@
 {
   "name": "greenyouse-datetime-local-input",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "description": "A polymer datetime-local component",
   "license": "MIT",
   "main": "datetime-local-input.html",
@@ -21,15 +21,13 @@
   ],
   "dependencies": {
     "better-dateinput-polyfill": "^2.0.0",
-    "better-dom": "^3.0.0",
-    "better-i18n-plugin": "^1.0.4",
-    "iron-a11y-keys": "^1.0.4",
+    "iron-a11y-keys": "PolymerElements/iron-a11y-keys",
     "iron-form-element-behavior": "PolymerElements/iron-form-element-behavior#1.0.6",
     "modernizr": "^3.3.1",
     "moment": "^2.11.2",
-    "paper-input": "PolymerElements/paper-input#1.1.4",
-    "paper-styles": "PolymerElements/paper-styles#1.1.2",
-    "polymer": "Polymer/polymer#1.2.3"
+    "paper-input": "PolymerElements/paper-input",
+    "paper-styles": "PolymerElements/paper-styles",
+    "polymer": "Polymer/polymer"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page",
