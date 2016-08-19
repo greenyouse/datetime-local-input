@@ -40,17 +40,15 @@ Or [download as ZIP](https://github.com/greenyouse/datetime-local-input/archive/
 
 Attribute     | Options     | Default      | Description
 ---           | ---         | ---          | ---
-`errorMessage`         | *string*    | `Please provide a full date` | An error message
-for when validation fails
+`errorMessage`         | *string*    | `Please provide a full date` | An error message for when validation fails
 `label`         | *string*    | `Date`        | The input label
-`value`         | *string*    | `bar`        | An error message
+`value`         | *string*    | the current time        | The datetime-local time
 
 ## Methods
 
 Method        | Parameters   | Returns     | Description
 ---           | ---          | ---         | ---
-`validate()`   | None.        | Boolean    | Checks that the input value
-is a datetime-local time.
+`validate()`   | None.        | Boolean    | Checks that the input value is a datetime-local time.
 
 ## Development
 
